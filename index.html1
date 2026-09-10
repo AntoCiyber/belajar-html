@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Struktur Semantik Mentah</title>
+</head>
+<body>
+  <header>
+    <h1>Portal Portal Mahasiswa (Tanpa CSS)</h1>
+    <nav>
+      <a href="#beranda">Beranda</a> |
+      <a href="#artikel">Artikel</a> |
+      <a href="#kontak">Kontak</a>
+    </nav>
+  </header>
+
+  <hr>
+
+  <main>
+    <article>
+      <h2>Pengenalan HTML Semantik</h2>
+      <p>HTML semantik memberikan makna struktural pada konten dokumen, bukan sekadar penataan visual.</p>
+      
+      <figure>
+        <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=280" alt="Sirkuit Komputer" width="280">
+        <figcaption>Gambar 1: Mikrokontroler sistem tertanam</figcaption>
+      </figure>
+    </article>
+
+    <aside>
+      <h3>Catatan Samping (Aside)</h3>
+      <p>Ini adalah informasi pelengkap dalam dokumen.</p>
+    </aside>
+  </main>
+
+  <hr>
+
+  <footer>
+    <p>&copy; 2026 Rekayasa Sistem Komputer. Hak cipta dilindungi.</p>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jadilah Seperti Air Laut</title>
+    <!-- Import Google Font untuk tulisan estetis / latin -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #1a1a1a;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Container dengan ukuran portrait / kartu */
+        .card {
+            position: relative;
+            width: 100%;
+            max-width: 400px;
+            height: 90vh;
+            max-height: 700px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            
+            /* Ganti 'gambar-laut.jpg' dengan URL gambar latar Anda */
+            background-image: url('gambar-laut.jpg'); 
+            background-size: cover;
+            background-position: center;
+            
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            text-align: center;
+            padding: 60px 20px 20px 20px;
+        }
+
+        /* Lapisan tipis transparan agar teks lebih jelas */
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.15);
+            z-index: 1;
+        }
+
+        /* Teks Kutipan */
+        .quote-text {
+            position: relative;
+            z-index: 2;
+            font-family: 'Great Vibes', cursive;
+            color: #ffffff;
+            font-size: 2.2rem;
+            line-height: 1.4;
+            font-weight: 400;
+            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Watermark di bagian bawah */
+        .watermark {
+            position: absolute;
+            bottom: 15px;
+            z-index: 2;
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.7);
+            font-style: italic;
+            letter-spacing: 1px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <div class="overlay"></div>
+        <p class="quote-text">
+            Jadilah seperti air laut<br>
+            Yang santai dan menyeramkan
+        </p>
+        <span class="watermark">@frisdaaa___</span>
+    </div>
+
+</body>
+</html>
