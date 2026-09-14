@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wallpaper Partikel Interaktif</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            overflow: hidden;
+        }
+
+        body, html {
+            width: 100%;
+            height: 100%;
+            background-color: #0f172a; /* Warna latar belakang gelap */
+        }
+
+        canvas {
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="particleCanvas"></canvas>
+
+    <script>
+        const canvas = document.getElementById('particleCanvas');
+        const ctx = canvas.getContext('2d');
+
+        let particlesArray = [];
+        const numberOfParticles = 90; // Jumlah partikel
+
+        // Atur ukuran canvas menyesuaikan layar
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        // Posisi mouse untuk interaksi
+        const mouse = {
+            x: null,
+            y: null,
+            radius: 120 // Jarak jangkauan mouse ke partikel
+        };
+
+        window.addEventListener('mousemove', (event) => {
+            mouse.x = event.clientX;
+            mouse.y = event.clientY;
+        });
+
+        window.addEventListener('mouseleave', () => {
+            mouse.x = null;
+            mouse.y = null;
+        });
+
+        // Class Partikel
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 3 + 1; // Ukuran partikel (1px - 4px)
+                this.speedX = (Math.random() - 0.5) * 1.5; // Kecepatan gerak X
+                this.speedY = (Math.random() - 0.5) * 1.5; // Kecepatan gerak Y
+                this.color = '#38bdf8'; // Warna partikel (Cyan/Light Blue)
+            }
+
+            // Gambar partikel di canvas
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = this.color;
+                ctx.fill();
+            }
+
+            // Perbarui posisi partikel
+            update() {
+                // Memantul jika menabrak tepi layar
+                if (this.x > canvas.width || this.x < 0) {
+                    this.speedX = -this.speedX;
+                }
+                if (this.y > canvas.height || this.y < 0) {
+                    this.speedY = -this.speedY;
+                }
+
+                // Efek dorongan saat dekat mouse
+                if (mouse.x !== null && mouse.y !== null) {
+                    let dx = mouse.x - this.x;
+                    let dy = mouse.y - this.y;
+                    let distance = Math.sqrt(dx * dx + dy * dy);
+                    if (distance < mouse.radius) {
+                        let forceDirectionX = dx / distance;
+                        let forceDirectionY = dy / distance;
+                        let force = (mouse.radius - distance) / mouse.radius;
+                        let directionX = forceDirectionX * force * 3;
+                        let directionY = forceDirectionY * force * 3;
+
+                        this.x -= directionX;
+                        this.y -= directionY;
+                    }
+                }
+
+                // Gerakan normal
+                this.x += this.speedX;
+                this.y += this.speedY;
+
+                this.draw();
+            }
+        }
+
+        // Inisialisasi daftar partikel
+        function init() {
+            particlesArray = [];
+            for (let i = 0; i < numberOfParticles; i++) {
+                particlesArray.push(new Particle());
+            }
+        }
+
+        // Hubungkan partikel yang berdekatan dengan garis halus
+        function connectParticles() {
+            let maxDistance = 120;
+            for (let a = 0; a < particlesArray.length; a++) {
+                for (let b = a; b < particlesArray.length; b++) {
+                    let dx = particlesArray[a].x - particlesArray[b].x;
+                    let dy = particlesArray[a].y - particlesArray[b].y;
+                    let distance = Math.sqrt(dx * dx + dy * dy);
+
+                    if (distance < maxDistance) {
+                        let opacity = 1 - (distance / maxDistance);
+                        ctx.strokeStyle = `rgba(56, 189, 248, ${opacity * 0.4})`;
+                        ctx.lineWidth = 1;
+                        ctx.beginPath();
+                        ctx.moveTo(particlesArray[a].x, particlesArray[a].y);
+                        ctx.lineTo(particlesArray[b].x, particlesArray[b].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+        }
+
+        // Loop animasi
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            for (let i = 0; i < particlesArray.length; i++) {
+                particlesArray[i].update();
+            }
+            connectParticles();
+
+            requestAnimationFrame(animate);
+        }
+
+        init();
+        animate();
+    </script>
+</body>
+</html>
